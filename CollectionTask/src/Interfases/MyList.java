@@ -7,7 +7,6 @@ public class MyList implements Collection {
     private static final int DEFAULT_CAPACITY = 10;
 
     private Object[] elements; //default array < 10 items
-    private Object[] newElements; //new array > 10 items
     private Object[] commonElements = {}; //common array for getting size
     private int tempElementsLength; //temporary number for getting the new array length
 
@@ -28,17 +27,17 @@ public class MyList implements Collection {
 
     @Override
     public boolean isEmpty() {
-        return elements.length == 0;
+        return size() == 0;
     }
 
     @Override
     public boolean contains(Object o) {
         boolean isPresent = false;
-        for (int i = 0; i < elements.length; i++) {
-            if (elements[i] == o) {
+        for (int i = 0; i < commonElements.length; i++) {
+            if (commonElements[i] == o) {
                 isPresent = true;
                 break;
-            } else isPresent = false;
+            }
         }
         return isPresent;
     }
@@ -50,6 +49,12 @@ public class MyList implements Collection {
 
     @Override
     public Object[] toArray() {
+        Object[] array = new Object[commonElements.length];
+        for (int i = 0; i < commonElements.length; i++) {
+            if (commonElements[i] != null) {
+
+            }
+        }
         return elements;
     }
 
@@ -83,14 +88,24 @@ public class MyList implements Collection {
     @Override
     public boolean remove(Object o) {
         boolean wasRemoved = false;
-        newElements = new Object[elements.length - 1];
-        for (int i = 0; i < elements.length; i++) {
-            if (elements[i] != o) {
-                newElements[i] = elements[i];
-            } else {
+        Object[] newElements = new Object[commonElements.length];
+        Object[] newElementsDecr;
+        for (int i = 0; i < commonElements.length; i++) {
+            if (commonElements[i].equals(o)) {
+                newElementsDecr = new Object[newElements.length - 1];
+                System.arraycopy(newElements, 0, newElementsDecr, 0, newElementsDecr.length);
+                newElements = newElementsDecr;
                 wasRemoved = true;
+            } else {
+                for (int k = 0; k < newElements.length; k++) {
+                    if (newElements[k] == null) {
+                        newElements[k] = commonElements[i];
+                        break;
+                    }
+                }
             }
         }
+        commonElements = newElements;
         return wasRemoved;
     }
 
@@ -147,5 +162,16 @@ public class MyList implements Collection {
             }
             return nextObject;
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean isEquals = false;
+        for (int i = 0; i < commonElements.length; i++) {
+            if (commonElements[i].hashCode() == obj.getClass().hashCode() && commonElements[i] != null) {
+                isEquals = true;
+            }
+        }
+        return isEquals;
     }
 }

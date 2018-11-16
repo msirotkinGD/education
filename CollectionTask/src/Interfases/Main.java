@@ -25,6 +25,10 @@ public class Main {
         furniture.add(shelf);
         System.out.println("Size after adding any furniture to the collection: " + furniture.size());
         System.out.println();
+        System.out.println("Removing one of the furniture from the collection...");
+        System.out.println("Size before removing certain furniture from the collection: " + furniture.size());
+        furniture.remove(table);
+        System.out.println("Size after removing certain furniture from the collection: " + furniture.size());
 
         /*System.out.println("Converting collection to an array...");
         furniture.toArray();
