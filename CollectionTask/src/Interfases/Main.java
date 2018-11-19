@@ -1,5 +1,6 @@
 package Interfases;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class Main {
@@ -29,16 +30,10 @@ public class Main {
         System.out.println("Size before removing certain furniture from the collection: " + furniture.size());
         furniture.remove(table);
         System.out.println("Size after removing certain furniture from the collection: " + furniture.size());
-
-        /*System.out.println("Converting collection to an array...");
-        furniture.toArray();
-        System.out.println(furniture);
         System.out.println();
+        System.out.println("Converting the collection to an array...");
+        System.out.println((furniture.toArray()));
 
-        System.out.println("Deleting Chair from the collection...");
-        furniture.remove(chair);
-        System.out.println(furniture);
-        System.out.println();
 
         System.out.println("First Iterator invocation");
         for (Object o : furniture) {
@@ -47,14 +42,22 @@ public class Main {
         System.out.println();
 
         System.out.println("Second Iterator invocation");
-        Iterator<FurnitureType> iter = new MyList().iterator();
+        Iterator iter = furniture.iterator();
         while (iter.hasNext()) {
             System.out.println(iter.next());
         }
+        System.out.println();
 
+        if (furniture.contains(chair)) {
+            System.out.println("The Furniture collection contains \"Chair\"");
+        } else {
+            System.out.println("The Furniture collection doesn't contain \"Chair\"");
+        }
         if (furniture.contains(table)) {
             System.out.println("The Furniture collection contains \"Table\"");
-        }*/
+        } else {
+            System.out.println("The Furniture collection doesn't contain \"Table\"");
+        }
 
     }
 }

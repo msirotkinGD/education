@@ -1,6 +1,9 @@
 package Interfases;
 
+import java.lang.reflect.Field;
 import java.util.*;
+
+import static java.lang.System.exit;
 
 public class MyList implements Collection {
 
@@ -49,13 +52,15 @@ public class MyList implements Collection {
 
     @Override
     public Object[] toArray() {
-        Object[] array = new Object[commonElements.length];
-        for (int i = 0; i < commonElements.length; i++) {
-            if (commonElements[i] != null) {
-
-            }
+        Object[] array;
+        if (size() > 0) {
+             array = new Object[size()];
+             System.arraycopy(commonElements, 0, array, 0, array.length);
+        } else {
+            throw new NullPointerException();
         }
-        return elements;
+        commonElements = array;
+        return commonElements;
     }
 
     @Override
@@ -136,6 +141,7 @@ public class MyList implements Collection {
 
     @Override
     public Object[] toArray(Object[] a) {
+
         return new Object[1];
     }
 
@@ -147,18 +153,18 @@ public class MyList implements Collection {
 
         @Override
         public boolean hasNext() {
-            if (next() != null) {
+            if (currentElement < objects.length) {
                 hasNext = true;
+            } else {
+                hasNext = false;
             }
             return hasNext;
         }
 
         @Override
         public Object next() {
-            if (objects[currentElement] != null) {
+            if (currentElement < objects.length) {
                 nextObject = objects[currentElement++];
-            } else {
-                throw new ArrayIndexOutOfBoundsException();
             }
             return nextObject;
         }
@@ -173,5 +179,35 @@ public class MyList implements Collection {
             }
         }
         return isEquals;
+    }
+
+    /*@Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+
+        Field[] declaredFields = commonElements.getClass().getDeclaredFields();
+        for (Field declaredField : declaredFields) {
+            declaredField.get
+        }
+
+        result = prime * result + commonElements.getClass().getDeclaredField("commonElements").get()
+        return super.hashCode();
+    }*/
+
+    @Override
+    public String toString() {
+        Field[] declaredFields = commonElements.getClass().getDeclaredFields();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < declaredFields.length; i++) {
+            if (declaredFields[i] != null) {
+                try {
+                    sb.append(declaredFields[i].getClass().getMethod("toString()"));
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return sb.toString();
     }
 }
